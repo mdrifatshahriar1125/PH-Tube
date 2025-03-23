@@ -49,7 +49,52 @@ function showcatagory(catagories1){
 function fetchallvedio(){
     fetch('https://openapi.programming-hero.com/api/phero-tube/videos')
     .then(res=>res.json())
-    .then(data=> console.log(data.videos));
+    .then(data=> showallvideo(data.videos));
+}
+
+function showallvideo(videos){
+    const videoload=document.getElementById('video-load');
+
+videos.forEach(video=>{
+    console.log(video)
+    const newvideo=document.createElement('div');
+    newvideo.innerHTML=`
+     <div class="flex flex-col gap-2">
+                <div class=" relative">
+              
+                    <img class="w-full h-56 object-cover rounded-lg" src="${video.thumbnail}" alt="">
+     
+                    <p class="absolute bottom-2 right-2 text-white bg-black px-2 py-1 rounded-md">3hrs 56 min ago</p>
+                    
+                </div>
+                <div class="flex gap-1">
+                    <div>
+                       
+                        <img class="rounded-full w-10 h-10" src="${video.authors[0].profile_picture}" alt="">
+                        
+                    </div>
+                        
+                    <div>
+                        <p class="font-semibold text-xl">${video.title}</p>
+                        <div class="flex items-center">
+                            <p>${video.authors[0].profile_name}</p>
+                            <p>${video.authors[0].verified ? '<img class="h-5"  src="assets/varified icon.png" alt="">' : ''}</p>
+                          
+                            
+                            
+                        </div>
+                        <p class="flex gap-3">${video.others.views} views </p>
+
+                    </div>
+                </div>
+
+            </div>
+
+    `
+
+    videoload.appendChild(newvideo);
+})
+
 }
 
 
