@@ -46,9 +46,9 @@ function showcatagory(catagories1) {
     });
 }
 
-function fetchallvedio() {
+function fetchallvedio(inputvalue="") {
     showloader();
-    fetch('https://openapi.programming-hero.com/api/phero-tube/videos')
+    fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${inputvalue}`)
         .then(res => res.json())
         .then(data =>{  
             removeactiveclass()
@@ -217,6 +217,11 @@ function removeloader() {
     document.getElementById("loader").classList.add("hidden")
     document.getElementById("video-load").classList.remove("hidden")
 }
+
+document.getElementById('input-section').addEventListener('keyup',(event)=>{
+    const inputvalue=event.target.value;
+    fetchallvedio(inputvalue);
+})
 
 fetchallvedio()
 videocatagoryload();
