@@ -40,24 +40,35 @@ function showcatagory(catagories1) {
     catagories1.forEach(element => {
         // console.log(element.category);
         const newdiv = document.createElement("div");
-        newdiv.innerHTML = `<div onclick="fetchdifferentcatagoricalvideo(${element.category_id})"  class=" bg-slate-300 py-1 px-2 sm:px-5 sm:py-2 sm:text-xl  rounded-sm ">${element.category}</div>
+        newdiv.innerHTML = `<div id="btn-${element.category_id}" onclick="fetchdifferentcatagoricalvideo(${element.category_id})"  class=" bg-slate-300 hover:bg-red-500 hover:text-white py-1 px-2 sm:px-5 sm:py-2 sm:text-xl  rounded-sm ">${element.category}</div>
  `
         document.getElementById('video-catagory').appendChild(newdiv);
     });
 }
 
 function fetchallvedio() {
+    showloader();
     fetch('https://openapi.programming-hero.com/api/phero-tube/videos')
         .then(res => res.json())
-        .then(data => showallvideo(data.videos));
+        .then(data =>{  
+            removeactiveclass()
+            const visitedbutton1=document.getElementById("btnall");
+            visitedbutton1.classList.add("active");
+
+            showallvideo(data.videos)} );
 }
 
 function showallvideo(videos) {
     const videoload = document.getElementById('video-load');
      videoload.innerHTML="";
 
+     if (!document.getElementById('video-load').classList.contains("grid")) {
+        document.getElementById('video-load').classList.add("grid");
+      }
+
     videos.forEach(video => {
-        console.log(video)
+
+        // console.log(video)
         const newvideo = document.createElement('div');
         newvideo.innerHTML = `
      <div class="flex flex-col gap-2">
@@ -77,6 +88,7 @@ function showallvideo(videos) {
                         
                     <div>
                         <p class="font-semibold text-xl">${video.title}</p>
+                     <div class="flex flex-row sm:flex-col gap-4 sm:gap-0">
                         <div class="flex items-center">
                             <p>${video.authors[0].profile_name}</p>
                             <p>${video.authors[0].verified ? '<img class="h-5"  src="assets/varified icon.png" alt="">' : ''}</p>
@@ -85,7 +97,7 @@ function showallvideo(videos) {
                             
                         </div>
                         <p class="flex gap-3">${video.others.views} views </p>
-
+                     </div>
                     </div>
                 </div>
 
@@ -95,17 +107,24 @@ function showallvideo(videos) {
 
         videoload.appendChild(newvideo);
     })
-
+    removeloader()
 }
 
 function fetchdifferentcatagoricalvideo(catagory_id) {
     console.log(catagory_id)
+    showloader()
     fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${catagory_id}`)
         .then(res => res.json())
-        .then(data => showcatagoricalvideos(data.category));
+        .then(data =>{
+            removeactiveclass()
+            const visitedbutton=document.getElementById(`btn-${catagory_id}`);
+            visitedbutton.classList.add("active");
+            showcatagoricalvideos(data.category)} );
+       
 }
 
 function showcatagoricalvideos(video1) {
+   
     const videoload = document.getElementById('video-load');
     videoload.innerHTML="";
 
@@ -114,13 +133,14 @@ function showcatagoricalvideos(video1) {
        const newvideo = document.createElement('div');
         newvideo.innerHTML = `
         
-           <div class="flex flex-col justify-center items-center py-32">
+           <div class="flex flex-col justify-center items-center py-20 sm:py-24 md:py-32">
                 <div class="mx-auto"><img src="assets/Icon.png" alt=""></div>
-                <div class="mx-auto text-2xl font-bold text-center">Oops!! Sorry, There is no <br> content here</div>
+                <div class="mx-auto  text-xl sm:text-4xl font-bold text-center">Oops!! Sorry, There is no <br> content here</div>
 
             </div>
         ` 
         videoload.appendChild(newvideo);
+        removeloader();
         return;
     }
 
@@ -149,6 +169,7 @@ if (!document.getElementById('video-load').classList.contains("grid")) {
                         
                     <div>
                         <p class="font-semibold text-xl">${video.title}</p>
+                       <div class="flex flex-row sm:flex-col gap-4 sm:gap-0">  
                         <div class="flex items-center">
                             <p>${video.authors[0].profile_name}</p>
                             <p>${video.authors[0].verified ? '<img class="h-5"  src="assets/varified icon.png" alt="">' : ''}</p>
@@ -157,7 +178,7 @@ if (!document.getElementById('video-load').classList.contains("grid")) {
                             
                         </div>
                         <p class="flex gap-3">${video.others.views} views </p>
-
+                        </div>
                     </div>
                 </div>
 
@@ -167,7 +188,34 @@ if (!document.getElementById('video-load').classList.contains("grid")) {
 
         videoload.appendChild(newvideo);
     })
+    removeloader()
+}
 
+// function handleButtonClick() {
+//     // Remove 'active' class from all buttons
+//     document.querySelectorAll(".btn").forEach(button => {
+//         button.classList.remove("active");
+//     });
+
+//     // Add 'active' class to the clicked button
+//     catagory_id.classList.add("active");
+//   }
+
+  function removeactiveclass() {
+    const btnallactive = document.getElementsByClassName("active");
+    for (let b of btnallactive) {
+        b.classList.remove("active")
+    }
+}
+
+function showloader() {
+    document.getElementById("loader").classList.remove("hidden")
+    document.getElementById("video-load").classList.add("hidden")
+
+}
+function removeloader() {
+    document.getElementById("loader").classList.add("hidden")
+    document.getElementById("video-load").classList.remove("hidden")
 }
 
 fetchallvedio()

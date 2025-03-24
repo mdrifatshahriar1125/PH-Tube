@@ -8,6 +8,12 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
+    <style>
+        .active{
+            background-color: red;
+            color:white;
+        }
+    </style>
 </head>
 
 <body>
@@ -23,15 +29,19 @@
     <main class="w-11/12 mx-auto ">
         <!-- auto catagory load section -->
         <section id="video-catagory" class=" py-5 flex justify-center items-center md:gap-5 gap-3">
-            <div onclick="fetchallvedio()" class="bg-[#FF1F3D] py-1 px-2 sm:py-2 sm:px-5 sm:text-xl text-white rounded-sm ">All</div>
+            <div id="btnall" onclick="fetchallvedio()" class=" bg-slate-300 hover:bg-red-500 hover:text-white py-1 px-2 sm:px-5 sm:py-2 sm:text-xl  rounded-sm ">All</div>
 
         </section>
+
+        <div id="loader" class=" hidden text-center ">
+            <span class="lg:h-20 md:h-14 lg:w-20 md:w-14  lg:mt-60 md:mt-36  loading loading-spinner loading-xl"></span>
+        </div>
         
         <!-- load vodeo -->
         <section id="video-load"
             class=" grid grid-cols-1 gap-y-4 md:grid-cols-2 md:gap-3 lg:grid-cols-4  lg:gap-7">
             <!-- single card -->
-            <div class=" ">
+            <!-- <div class=" ">
                 <div class=" relative">
                     <img class="w-full h-56 object-cover rounded-lg" src="assets/car.jpg" alt="">
                     <p class="absolute bottom-2 right-2 text-white bg-black px-2 py-1 rounded-md">3hrs 56 min ago</p>
@@ -54,7 +64,7 @@
                     </div>
                 </div>
 
-            </div>
+            </div> -->
 
         </section>
         <section>
