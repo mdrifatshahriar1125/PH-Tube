@@ -63,7 +63,7 @@ function showallvideo(videos) {
      <div class="flex flex-col gap-2">
                 <div class=" relative">
               
-                    <img class="w-full h-56 object-cover rounded-lg" src="${video.thumbnail}" alt="">
+                    <img class="w-full h-48 object-cover rounded-lg" src="${video.thumbnail}" alt="">
      
                     <p class="absolute bottom-2 right-2 text-white bg-black px-2 py-1 rounded-md">3hrs 56 min ago</p>
                     
@@ -110,10 +110,11 @@ function showcatagoricalvideos(video1) {
     videoload.innerHTML="";
 
     if(video1.length<1){
+        videoload.classList.remove("grid");
        const newvideo = document.createElement('div');
         newvideo.innerHTML = `
         
-           <div class="flex flex-col justify-center items-center py-20">
+           <div class="flex flex-col justify-center items-center py-32">
                 <div class="mx-auto"><img src="assets/Icon.png" alt=""></div>
                 <div class="mx-auto text-2xl font-bold text-center">Oops!! Sorry, There is no <br> content here</div>
 
@@ -124,13 +125,17 @@ function showcatagoricalvideos(video1) {
     }
 
     video1.forEach(video => {
+        
+if (!document.getElementById('video-load').classList.contains("grid")) {
+    document.getElementById('video-load').classList.add("grid");
+  }
         // console.log(video)
         const newvideo = document.createElement('div');
         newvideo.innerHTML = `
      <div class="flex flex-col gap-2">
                 <div class=" relative">
               
-                    <img class="w-full h-56 object-cover rounded-lg" src="${video.thumbnail}" alt="">
+                    <img class="w-full h-48 object-cover rounded-lg" src="${video.thumbnail}" alt="">
      
                     <p class="absolute bottom-2 right-2 text-white bg-black px-2 py-1 rounded-md">3hrs 56 min ago</p>
                     
